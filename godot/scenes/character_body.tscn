@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://de35tlu2xosp7"]
+
+[ext_resource type="Texture2D" uid="uid://bmaq5vwpru384" path="res://icon.svg" id="2_2acl3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4idro"]
+height = 20.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0m443"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="ch" type="Player" groups=["players"]]
+speed = 125.0
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_4idro")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("2_2acl3")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+
+[node name="NavigationAgent" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_0m443")

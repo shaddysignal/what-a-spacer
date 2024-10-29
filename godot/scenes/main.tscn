@@ -1,0 +1,125 @@
+[gd_scene load_steps=8 format=3 uid="uid://c7kyxpkwu83bl"]
+
+[ext_resource type="PackedScene" uid="uid://c00vwvt1tnoyw" path="res://scenes/door_control.tscn" id="1_4adf3"]
+[ext_resource type="Script" path="res://scripts/main/main.gd" id="1_q7sh1"]
+[ext_resource type="PackedScene" uid="uid://7seoqtisoeod" path="res://scenes/life_capsule.tscn" id="2_6ffgn"]
+[ext_resource type="PackedScene" uid="uid://b2ni038wmjt7j" path="res://scenes/door.tscn" id="2_hfroo"]
+[ext_resource type="PackedScene" uid="uid://b3771xtxi78ir" path="res://scenes/lobby_control.tscn" id="5_0ikhn"]
+[ext_resource type="Script" path="res://scripts/main/player_spawner.gd" id="5_dp24y"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_qiu5e"]
+vertices = PackedVector2Array(20, 160.18, 85, 114.297, 85, 135, 85, 375, 85, 423.383, 20, 388.969, 20, 325, 650, 40, 650, 20, 696.211, 20, 735, 54.4766, 735, 135, 650, 135, 650, 70, 620, 40, 620, 70, 620, 75, 570, 75, 640, 185, 600, 185, 600, 165, 729.633, 165, 570, 275, 620, 275, 620, 430, 535, 430, 535, 460, 620, 460, 620, 545, 420, 545, 420, 460, 505, 460, 505, 430, 420, 430, 420, 375, 390, 375, 390, 430, 115, 430, 115, 375, 85, 325, 85, 345, 115, 345, 115, 325, 290, 325, 390, 345, 260, 265, 260, 295, 250, 295, 250, 260, 140, 260, 115, 260, 115, 255, 150, 255, 150, 175, 115, 175, 115, 165, 125, 140, 155, 140, 85, 165, 85, 295, 20, 295, 115, 135, 115, 105, 125, 105, 235, 140, 260, 140, 260, 145, 225, 145, 225, 225, 260, 225, 260, 235, 220, 260, 290, 235, 290, 105, 390, 105, 420, 345, 420, 105, 452.922, 105, 512.922, 275, 559.141, 20, 620, 20, 481.477, 97.6484, 532.141, 245, 570, 215, 540, 245, 640, 215, 636.297, 245, 570, 245, 540, 275, 290, 265, 160, 280.859, 159.07, 281.789, 152.648, 285, 147.352, 285, 140.93, 281.789, 140, 280.859, 160, 260, 200, 260, 150, 225, 225, 195, 215, 119.141, 215.93, 118.211, 222.352, 115, 227.648, 115, 234.07, 118.211, 235, 119.141, 215, 140, 225, 175, 175, 140, 220, 280.859, 219.07, 281.789, 212.648, 285, 207.352, 285, 200.93, 281.789, 200, 280.859, 129.141, 225, 128.211, 224.07, 125, 217.648, 125, 212.352, 128.211, 205.93, 129.141, 205, 150, 205, 155, 119.141, 155.93, 118.211, 162.352, 115, 167.648, 115, 174.07, 118.211, 175, 119.141, 245.859, 195, 245.859, 175, 246.789, 175.93, 250, 182.352, 250, 187.648, 246.789, 194.07)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 5, 6), PackedInt32Array(7, 8, 9), PackedInt32Array(10, 11, 12, 13, 9), PackedInt32Array(7, 9, 13), PackedInt32Array(14, 7, 13, 15), PackedInt32Array(15, 16, 17), PackedInt32Array(18, 19, 20, 21), PackedInt32Array(22, 23, 24, 25), PackedInt32Array(26, 27, 28, 29), PackedInt32Array(29, 30, 31), PackedInt32Array(26, 29, 31), PackedInt32Array(25, 26, 31, 32), PackedInt32Array(32, 33, 34), PackedInt32Array(35, 36, 37, 38), PackedInt32Array(6, 39, 40), PackedInt32Array(3, 6, 40, 38), PackedInt32Array(38, 40, 41, 35), PackedInt32Array(35, 41, 42, 43, 44), PackedInt32Array(45, 46, 47, 48), PackedInt32Array(49, 50, 51, 52), PackedInt32Array(53, 54, 55, 56, 57), PackedInt32Array(58, 59, 60, 0), PackedInt32Array(55, 58, 0, 2, 61, 56), PackedInt32Array(61, 62, 63, 56), PackedInt32Array(64, 65, 66, 67), PackedInt32Array(68, 69, 70, 48, 71), PackedInt32Array(72, 73, 74, 44), PackedInt32Array(75, 76, 77, 78, 25, 32), PackedInt32Array(79, 80, 14, 17, 81), PackedInt32Array(14, 15, 17), PackedInt32Array(82, 81, 17, 83, 84), PackedInt32Array(85, 18, 21), PackedInt32Array(85, 21, 86), PackedInt32Array(83, 85, 86, 87), PackedInt32Array(84, 83, 87), PackedInt32Array(84, 87, 22, 88), PackedInt32Array(88, 22, 25), PackedInt32Array(78, 88, 25), PackedInt32Array(75, 32, 34), PackedInt32Array(75, 34, 35, 44), PackedInt32Array(44, 43, 89), PackedInt32Array(72, 44, 89), PackedInt32Array(70, 72, 89, 45, 48), PackedInt32Array(90, 91, 92, 93, 94, 95, 49, 52, 96), PackedInt32Array(68, 97, 96, 52, 98, 99), PackedInt32Array(100, 101, 102, 103, 104, 105, 64, 67, 106), PackedInt32Array(106, 67, 107, 108), PackedInt32Array(71, 109, 110, 111, 112, 113, 114, 97), PackedInt32Array(68, 71, 97), PackedInt32Array(98, 115, 116, 117, 118, 119, 120, 121), PackedInt32Array(99, 98, 121), PackedInt32Array(99, 121, 53, 57), PackedInt32Array(99, 57, 122, 108), PackedInt32Array(123, 124, 125, 126, 127, 108, 122), PackedInt32Array(99, 108, 107), PackedInt32Array(128, 99, 107, 129, 130, 131, 132, 133)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(745, 145, 640, 145, 640, 80, 630, 80, 630, 85, 580, 85, 580, 205, 630, 205, 630, 195, 590, 195, 590, 155, 630, 155, 745, 155, 745, 165, 640, 255, 580, 255, 580, 265, 630, 265, 630, 440, 545, 440, 545, 450, 630, 450, 630, 555, 410, 555, 410, 450, 495, 450, 495, 440, 410, 440, 410, 385, 400, 385, 400, 440, 105, 440, 105, 385, 95, 385, 95, 440, 10, 395, 10, 315, 95, 315, 95, 335, 105, 335, 105, 315, 280, 315, 280, 275, 270, 275, 270, 305, 230, 305, 240, 295, 240, 270, 230, 270, 230, 285, 225, 290, 215, 295, 205, 295, 195, 290, 190, 285, 190, 270, 170, 270, 170, 285, 165, 290, 155, 295, 145, 295, 135, 290, 130, 285, 130, 270, 120, 270, 120, 295, 130, 305, 105, 305, 105, 235, 115, 245, 140, 245, 140, 235, 125, 235, 120, 230, 115, 220, 115, 210, 120, 200, 125, 195, 140, 195, 140, 185, 115, 185, 105, 195, 105, 175, 95, 175, 95, 305, 10, 305, 10, 155, 95, 95, 95, 125, 105, 125, 105, 95, 145, 95, 135, 105, 135, 130, 145, 130, 145, 115, 150, 110, 160, 105, 170, 105, 180, 110, 185, 115, 185, 130, 205, 130, 205, 115, 210, 110, 220, 105, 230, 105, 240, 110, 245, 115, 245, 130, 255, 130, 255, 105, 245, 95, 270, 95, 270, 165, 260, 155, 235, 155, 235, 165, 250, 165, 255, 170, 260, 180, 260, 190, 255, 200, 250, 205, 235, 205, 235, 215, 260, 215, 270, 203.956, 270, 225, 280, 225, 280, 95, 400, 95, 400, 335, 410, 335, 410, 95, 460, 95, 520, 265, 530, 265, 530, 255, 525, 255, 470, 95, 555, 10, 630, 10, 630, 30, 640, 30, 640, 10, 700, 10, 745, 50)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[node name="ShipRoot" type="Node2D" groups=["roots"]]
+script = ExtResource("1_q7sh1")
+
+[node name="Ship" type="Polygon2D" parent="."]
+color = Color(0, 0.0273918, 0.164062, 1)
+polygon = PackedVector2Array(95, 85, 0, 150, 0, 400, 95, 450, 400, 450, 400, 555, 425, 580, 615, 580, 640, 555, 640, 270, 755, 170, 755, 45, 705, 0, 550, 0, 465, 85)
+
+[node name="Cabin" type="Polygon2D" parent="Ship"]
+color = Color(0.605469, 0.605469, 0.605469, 1)
+polygon = PackedVector2Array(640, 145, 745, 145, 745, 50, 700, 10, 640, 10)
+
+[node name="Control" type="Polygon2D" parent="Ship"]
+color = Color(0.816406, 0.816406, 0.816406, 1)
+polygon = PackedVector2Array(555, 10, 470, 95, 525, 255, 640, 255, 745, 165, 745, 155, 630, 155, 630, 10)
+
+[node name="DoorControl" parent="Ship/Control" instance=ExtResource("1_4adf3")]
+position = Vector2(610, 145)
+rotation = -1.5708
+
+[node name="Storage" type="Polygon2D" parent="Ship"]
+color = Color(0.570312, 0.570312, 0.570312, 1)
+polygon = PackedVector2Array(460, 95, 520, 265, 630, 265, 630, 440, 410, 440, 410, 95)
+
+[node name="Armory" type="Polygon2D" parent="Ship"]
+color = Color(0.660156, 0.660156, 0.660156, 1)
+polygon = PackedVector2Array(410, 450, 630, 450, 630, 555, 410, 555)
+
+[node name="Weaponsary" type="Polygon2D" parent="Ship"]
+color = Color(0.65625, 0.65625, 0.65625, 1)
+polygon = PackedVector2Array(400, 95, 400, 440, 105, 440, 105, 315, 280, 315, 280, 95)
+
+[node name="Life Support" type="Polygon2D" parent="Ship"]
+color = Color(0.632812, 0.632812, 0.632812, 1)
+polygon = PackedVector2Array(270, 305, 105, 305, 105, 95, 270, 95)
+
+[node name="ls01" parent="Ship/Life Support" groups=["life_support"] instance=ExtResource("2_6ffgn")]
+position = Vector2(165, 130)
+
+[node name="ls02" parent="Ship/Life Support" groups=["life_support"] instance=ExtResource("2_6ffgn")]
+position = Vector2(225, 130)
+
+[node name="ls03" parent="Ship/Life Support" groups=["life_support"] instance=ExtResource("2_6ffgn")]
+position = Vector2(235, 185)
+rotation = 1.5708
+
+[node name="ls04" parent="Ship/Life Support" groups=["life_support"] instance=ExtResource("2_6ffgn")]
+position = Vector2(210, 270)
+rotation = 3.14159
+
+[node name="ls05" parent="Ship/Life Support" groups=["life_support"] instance=ExtResource("2_6ffgn")]
+position = Vector2(150, 270)
+rotation = 3.14159
+
+[node name="ls06" parent="Ship/Life Support" groups=["life_support"] instance=ExtResource("2_6ffgn")]
+position = Vector2(140, 215)
+rotation = -1.5708
+
+[node name="Computer Warfare" type="Polygon2D" parent="Ship"]
+color = Color(0.722656, 0.722656, 0.722656, 1)
+polygon = PackedVector2Array(95, 315, 95, 440, 10, 395, 10, 315)
+
+[node name="Engine" type="Polygon2D" parent="Ship"]
+color = Color(0.714844, 0.714844, 0.714844, 1)
+polygon = PackedVector2Array(10, 305, 95, 305, 95, 95, 10, 155)
+
+[node name="WallBody" type="StaticBody2D" parent="."]
+
+[node name="Wall" type="CollisionPolygon2D" parent="WallBody"]
+polygon = PackedVector2Array(0, 400, 95, 450, 105, 450, 400, 450, 400, 555, 410, 565, 630, 565, 640, 555, 640, 450, 640, 440, 630, 440, 545, 440, 545, 450, 630, 450, 630, 555, 410, 555, 410, 450, 495, 450, 495, 440, 410, 440, 410, 385, 400, 385, 400, 440, 105, 440, 105, 385, 95, 385, 95, 440, 10, 395, 10, 315, 95, 315, 95, 335, 105, 335, 105, 315, 280, 315, 280, 275, 270, 275, 270, 305, 105, 305, 105, 175, 95, 175, 95, 305, 10, 305, 10, 155, 95, 95, 95, 125, 105, 125, 105, 95, 270, 95, 270, 225, 280, 225, 280, 95, 400, 95, 400, 335, 410, 335, 410, 95, 460, 95, 520, 265, 530, 265, 530, 255, 525, 255, 470, 95, 555, 10, 630, 10, 630, 30, 640, 30, 640, 10, 700, 10, 745, 50, 745, 145, 640, 145, 640, 80, 630, 80, 630, 155, 745, 155, 745, 165, 640, 255, 580, 255, 580, 265, 630, 265, 630, 440, 640, 440, 640, 270, 645, 265, 755, 170, 755, 155, 755, 145, 755, 45, 705, 0, 640, 0, 630, 0, 550, 0, 465, 85, 410, 85, 400, 85, 280, 85, 270, 85, 105, 85, 95, 85, 0, 150, 0, 305, 0, 315)
+
+[node name="Doors" type="Node2D" parent="."]
+
+[node name="Door01" parent="Doors" instance=ExtResource("2_hfroo")]
+position = Vector2(635, 55)
+rotation = 1.5708
+
+[node name="Door02" parent="Doors" instance=ExtResource("2_hfroo")]
+position = Vector2(555, 260)
+
+[node name="Door03" parent="Doors" instance=ExtResource("2_hfroo")]
+position = Vector2(405, 360)
+rotation = 1.5708
+
+[node name="Door04" parent="Doors" instance=ExtResource("2_hfroo")]
+position = Vector2(100, 360)
+rotation = 1.5708
+
+[node name="Door05" parent="Doors" instance=ExtResource("2_hfroo")]
+position = Vector2(100, 150)
+rotation = 1.5708
+
+[node name="Door06" parent="Doors" instance=ExtResource("2_hfroo")]
+position = Vector2(520, 445)
+
+[node name="Door07" parent="Doors" instance=ExtResource("2_hfroo")]
+position = Vector2(275, 250)
+rotation = -1.5708
+
+[node name="NavigationMap" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_qiu5e")
+
+[node name="Characters" type="Node2D" parent="."]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="Characters"]
+spawn_path = NodePath("..")
+script = ExtResource("5_dp24y")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LobbyControl" parent="CanvasLayer" instance=ExtResource("5_0ikhn")]

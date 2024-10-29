@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2ni038wmjt7j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b8gax"]
+size = Vector2(60, 70)
+
+[sub_resource type="Curve2D" id="Curve2D_dxcwd"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0)
+}
+point_count = 2
+
+[node name="Door" type="Door"]
+
+[node name="DetectionArea" type="Area2D" parent="." groups=["door_detectors"]]
+collision_layer = 2
+collision_mask = 2
+
+[node name="DetectionCollision" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_b8gax")
+
+[node name="Passage" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-25, -5, -25, 5, 25, 5, 25, -5)
+
+[node name="DoorPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_dxcwd")
+
+[node name="DoorPosition" type="PathFollow2D" parent="DoorPath"]
+
+[node name="DoorBody" type="StaticBody2D" parent="DoorPath/DoorPosition"]
+
+[node name="DoorForm" type="Polygon2D" parent="DoorPath/DoorPosition/DoorBody"]
+position = Vector2(-25, -5)
+color = Color(0.539062, 0.1242, 0.164485, 1)
+polygon = PackedVector2Array(0, 10, 50, 10, 50, 0, 0, 0)
+
+[node name="DoorCollision" type="CollisionPolygon2D" parent="DoorPath/DoorPosition/DoorBody"]
+position = Vector2(-25, -5)
+polygon = PackedVector2Array(0, 0, 0, 10, 50, 10, 50, 0)
+
+[connection signal="body_entered" from="DetectionArea" to="." method="area_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="area_exited"]

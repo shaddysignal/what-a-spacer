@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://du8g3fai2nbf1"]
+
+[node name="LobbyItem" type="HBoxContainer"]
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Lobby Name"
+
+[node name="Availability" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "2/10"
+
+[node name="Connect" type="Button" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "connect"

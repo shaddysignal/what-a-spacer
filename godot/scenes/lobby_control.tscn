@@ -1,0 +1,221 @@
+[gd_scene load_steps=8 format=3 uid="uid://b3771xtxi78ir"]
+
+[ext_resource type="FontFile" uid="uid://biht5lg82shnb" path="res://ethnocentric/ethnocentric rg.otf" id="1_fnl2m"]
+[ext_resource type="Script" path="res://scripts/lobby_control/lobby_chat.gd" id="2_6lu20"]
+[ext_resource type="PackedScene" uid="uid://cyqy2r2u2chaj" path="res://scenes/chat_item.tscn" id="3_n82y6"]
+[ext_resource type="Script" path="res://scripts/lobby_control/quit_button.gd" id="4_m0l0d"]
+[ext_resource type="Script" path="res://scripts/lobby_control/leave_button.gd" id="5_8a1dh"]
+
+[sub_resource type="Theme" id="Theme_vdp65"]
+default_font = ExtResource("1_fnl2m")
+default_font_size = 8
+Button/colors/font_color = Color(0.132812, 0.132812, 0.132812, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Button/font_sizes/font_size = 16
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(0.988281, 0.988281, 0.988281, 1)
+Label/colors/font_shadow_color = Color(1, 1, 1, 0.196078)
+Label/font_sizes/font_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m5fhj"]
+bg_color = Color(1, 1, 1, 0.470588)
+
+[node name="LobbyControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme = SubResource("Theme_vdp65")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = 300.0
+grow_vertical = 2
+
+[node name="LobbyChat" type="VBoxContainer" parent="BoxContainer"]
+custom_minimum_size = Vector2(0, 560)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+mouse_filter = 2
+script = ExtResource("2_6lu20")
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BoxContainer/LobbyChat"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_m5fhj")
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="Chat" type="VBoxContainer" parent="BoxContainer/LobbyChat/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+alignment = 2
+
+[node name="Item" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item2" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item3" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item4" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item5" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item6" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item7" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item8" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item9" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item10" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item11" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item12" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item13" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item14" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item15" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item16" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item17" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item18" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item19" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item20" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item21" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item22" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item23" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item24" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item25" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item26" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item27" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item28" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item29" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item30" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item31" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item32" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item33" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item34" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item35" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item36" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item37" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item38" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Item39" parent="BoxContainer/LobbyChat/ScrollContainer/Chat" instance=ExtResource("3_n82y6")]
+layout_mode = 2
+
+[node name="Input" type="HBoxContainer" parent="BoxContainer/LobbyChat"]
+layout_mode = 2
+
+[node name="InputLabel" type="Label" parent="BoxContainer/LobbyChat/Input"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "Input:"
+
+[node name="InputEdit" type="LineEdit" parent="BoxContainer/LobbyChat/Input"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoxContainer" type="BoxContainer" parent="BoxContainer/LobbyChat"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 95.0
+offset_bottom = 39.0
+text = "quit"
+script = ExtResource("4_m0l0d")
+
+[node name="LeaveButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 45.0
+offset_right = 95.0
+offset_bottom = 74.0
+text = "leave"
+script = ExtResource("5_8a1dh")
+
+[connection signal="text_submitted" from="BoxContainer/LobbyChat/Input/InputEdit" to="BoxContainer/LobbyChat" method="_on_input_edit_text_submitted"]
+[connection signal="pressed" from="QuitButton" to="QuitButton" method="_on_pressed"]
+[connection signal="pressed" from="LeaveButton" to="LeaveButton" method="_on_pressed"]

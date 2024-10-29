@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7mohjttc1ucd"]
+
+[ext_resource type="Script" path="res://scripts/loading_scene/loading_scene.gd" id="1_4bfbv"]
+[ext_resource type="Theme" uid="uid://blo0cm7b3q81j" path="res://main_theme.tres" id="1_o53h2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c4e84"]
+bg_color = Color(0.109375, 0.109375, 0.109375, 1)
+
+[node name="Control" type="Panel" groups=["roots"]]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_o53h2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_c4e84")
+script = ExtResource("1_4bfbv")
+
+[node name="Control" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="WaitingContainer" type="VBoxContainer" parent="Control"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="LoadingBar" type="ProgressBar" parent="Control/WaitingContainer"]
+custom_minimum_size = Vector2(600, 15)
+layout_mode = 2
+show_percentage = false
+
+[node name="MessageLabel" type="Label" parent="Control/WaitingContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.839844, 0.839844, 0.839844, 1)
+text = "Waiting for steam..."
+horizontal_alignment = 1

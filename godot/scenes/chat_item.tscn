@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cyqy2r2u2chaj"]
+
+[node name="Item" type="HBoxContainer"]
+offset_right = 290.0
+offset_bottom = 23.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Tag" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "tag:"
+
+[node name="Message" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "message"
+autowrap_mode = 2

@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://gehf858x2hc1"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PopupPanel" type="PopupPanel" parent="UI"]
+size = Vector2i(250, 65)
+visible = true
+always_on_top = true
+min_size = Vector2i(250, 65)
+
+[node name="PopupHolder" type="VBoxContainer" parent="UI/PopupPanel"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 246.0
+offset_bottom = 61.0
+
+[node name="PadTop" type="BoxContainer" parent="UI/PopupPanel/PopupHolder"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="MessageHolder" type="HBoxContainer" parent="UI/PopupPanel/PopupHolder"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Tag" type="Label" parent="UI/PopupPanel/PopupHolder/MessageHolder"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Tag"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="Separator" type="Label" parent="UI/PopupPanel/PopupHolder/MessageHolder"]
+layout_mode = 2
+size_flags_vertical = 1
+text = ":"
+
+[node name="Message" type="Label" parent="UI/PopupPanel/PopupHolder/MessageHolder"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Message "
+autowrap_mode = 2
+
+[node name="PadBottom" type="BoxContainer" parent="UI/PopupPanel/PopupHolder"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
