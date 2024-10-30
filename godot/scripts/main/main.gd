@@ -6,7 +6,7 @@ extends Node2D
 
 func _ready() -> void:
 	if multiplayer.is_server():
-		_init_player()
+		_init_player.rpc_id(1)
 		multiplayer.peer_disconnected.connect(_on_peer_disconnect)
 	else:
 		multiplayer.server_disconnected.connect(_on_server_disconnect) # Never called?
@@ -24,7 +24,29 @@ func _on_peer_disconnect(id: int):
 	for p in to_delete:
 		p.queue_free()
 
-@rpc("any_peer", "call_remote", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func _init_player():
-	var ch = character_spawner.spawn([multiplayer.get_remote_sender_id()])
+	var pods = get_tree().get_nodes_in_group("life_support")
+	pods.sort()
+	
+	var owner_id = multiplayer.get_remote_sender_id()
+	log_ref.trace("Before await: %s" % owner_id)
+	var spawn_point = await _find_pod(pods)
+	log_ref.trace("After await: %s" % owner_id)
+
+	var ch = character_spawner.spawn([owner_id, spawn_point])
 	log_ref.trace("Player spawn with authority %s" % ch.get_multiplayer_authority())
+
+func _find_pod(pods: Array) -> Vector2:
+	var pod_index = randi_range(0, pods.size() - 1)
+
+	var pod = pods[pod_index]
+	var spawn_area = pod.get_node("PodArea")
+	var spawn_point = pod.get_node("Marker").global_position
+	if (spawn_area.has_overlapping_bodies()):
+		log_ref.trace("Found pod %s and it has bodies in it. Awaiting..." % pod_index)
+		await get_tree().create_timer(1).timeout
+		return await _find_pod(pods)
+	else:
+		log_ref.trace("Found pod %s and its empty" % pod_index)
+		return spawn_point

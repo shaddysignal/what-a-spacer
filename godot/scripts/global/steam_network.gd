@@ -162,20 +162,19 @@ func populate_lobby_members() -> void:
 
 func create_lobby(type: Steam.LobbyType, max_members: int):
 	log_ref.trace("Attempting to create lobby (%s, %s)" % [type, max_members])
-	# _init_peer()
 
 	peer.create_lobby(type, max_members)
 
 func join_lobby_request(this_lobby_id: int) -> void:
 	log_ref.trace("Attempting to join lobby %s" % this_lobby_id)
 	lobby_members.clear()
-	# _init_peer()
 
 	peer.connect_lobby(this_lobby_id)
 
 func leave_lobby() -> void:
-	log_ref.trace("Attempting to leave current lobby %s" % lobby_id)
 	if lobby_id != 0:
+		log_ref.trace("Attempting to leave current lobby %s" % lobby_id)
+
 		# TODO: clean peer pockets?
 		peer.close()
 		Steam.leaveLobby(lobby_id)
