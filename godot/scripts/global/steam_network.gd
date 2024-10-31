@@ -18,15 +18,17 @@ var lobby_vote_kick: bool = false
 func _init_peer() -> void:
 	peer = SteamMultiplayerPeer.new()
 
+	# GodotSteam peer
 	peer.lobby_created.connect(_on_lobby_created) # after create request
 	peer.lobby_data_update.connect(_on_lobby_data_update) # presumably metadata update
 	# TODO: signal not fired ever?
 	peer.lobby_joined.connect(func(_this_lobby_id: int, _permissions: int, _locked: bool, _response: int): log_ref.trace("lobby_joined: signal from peer"))
-	peer.lobby_chat_update.connect(_on_lobby_chat_update) # some changes to members happen
+	# TODO: signal not fired ever?
+	peer.lobby_chat_update.connect(func(_lobby_id: int, _changed_id: int, _making_change_id: int, _chat_state: int): log_ref.trace("lobby_chat_update: signal from peer")) # some changes to members happen
+	# end
 
+# TODO: sometimes network init seems to slow, so fast connect may brake stuff
 func _ready() -> void:
-	_init_peer()
-
 	multiplayer.peer_connected.connect(func(id: int): log_ref.trace("PEER_CONNECTED: peer connected %s" % [id]))
 	multiplayer.peer_disconnected.connect(func(id: int): log_ref.trace("PEER_DISCONNECTED: peer disconnected %s" % [id]))
 	multiplayer.connected_to_server.connect(func(): log_ref.trace("CONNECTED_TO_SERVER: peer connected to server"))
@@ -37,6 +39,7 @@ func _ready() -> void:
 	Steam.persona_state_change.connect(_on_persona_change) # some changes to a player
 	Steam.join_requested.connect(_on_lobby_join_requested) # request to join from outside
 
+	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
 	Steam.lobby_joined.connect(_on_lobby_joined)
 
 	lobby_leave.connect(_on_lobby_leave)
@@ -60,10 +63,6 @@ func _on_lobby_created(connect_success: int, this_lobby_id: int) -> void:
 
 		var set_relay: bool = Steam.allowP2PPacketRelay(true)
 		log_ref.trace("Allowing Steam to be relay backup: %s" % set_relay)
-
-		# get_tree().root.multiplayer.multiplayer_peer = peer
-
-		# lobby_ready.emit() # signal to move from waiting to main
 	else:
 		# TODO: show error, return to menu
 		pass
@@ -89,17 +88,17 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 	var changer_name: String = Steam.getFriendPersonaName(change_id)
 
 	if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
-		log_ref.info("%s has joined the lobby." % changer_name)
+		log_ref.info("LOBBY_CHAT_UPDATE: %s has joined the lobby." % changer_name)
 	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
-		log_ref.info("%s has left the lobby." % changer_name)
+		log_ref.info("LOBBY_CHAT_UPDATE: %s has left the lobby." % changer_name)
 	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_KICKED:
-		log_ref.info("%s has been kicked from the lobby." % changer_name)
+		log_ref.info("LOBBY_CHAT_UPDATE: %s has been kicked from the lobby." % changer_name)
 	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_BANNED:
-		log_ref.info("%s has been banned from the lobby." % changer_name)
+		log_ref.info("LOBBY_CHAT_UPDATE: %s has been banned from the lobby." % changer_name)
 
 	# Else there was some unknown change
 	else:
-		log_ref.info("%s did... something." % changer_name)
+		log_ref.info("LOBBY_CHAT_UPDATE: %s did... something." % changer_name)
 
 	populate_lobby_members()
 
@@ -107,13 +106,10 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 	if response == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
 		lobby_id = this_lobby_id
 		populate_lobby_members()
-
+		
 		get_tree().root.multiplayer.multiplayer_peer = peer
 
-		lobby_ready.emit() # signal to move from waiting to main
-
-		# Make the initial handshake
-		# make_p2p_handshake()
+		lobby_ready.emit() # signal when to move from waiting to main
 	else:
 		var fail_reason: String
 
@@ -163,21 +159,24 @@ func populate_lobby_members() -> void:
 func create_lobby(type: Steam.LobbyType, max_members: int):
 	log_ref.trace("Attempting to create lobby (%s, %s)" % [type, max_members])
 
+	_init_peer()
 	peer.create_lobby(type, max_members)
 
 func join_lobby_request(this_lobby_id: int) -> void:
 	log_ref.trace("Attempting to join lobby %s" % this_lobby_id)
 	lobby_members.clear()
 
+	_init_peer()
 	peer.connect_lobby(this_lobby_id)
 
 func leave_lobby() -> void:
 	if lobby_id != 0:
 		log_ref.trace("Attempting to leave current lobby %s" % lobby_id)
 
-		# TODO: clean peer pockets?
+		# TODO: clean peer packets?
 		peer.close()
 		Steam.leaveLobby(lobby_id)
+		get_tree().root.multiplayer.multiplayer_peer = null
 
 		lobby_id = 0
 

@@ -83,7 +83,7 @@ func _find_pod(pods: Array) -> Vector2:
 	var spawn_point = pod.get_node("Marker").global_position
 	if (spawn_area.has_overlapping_bodies()):
 		log_ref.trace("Found pod %s (%s) and it has bodies in it. Awaiting..." % [pod.name, pod_index])
-		await get_tree().create_timer(1).timeout
+		await Global.await_sec(1)
 		return await _find_pod(pods)
 	else:
 		log_ref.trace("Found pod %s (%s) and its empty" % [pod.name, pod_index])

@@ -41,6 +41,7 @@ impl Door {
     
     #[func]
     fn area_exited(&mut self, _obj: Gd<Node2D>) {
+        // TODO: not called after peer disconnect
         if !self.trigger_area.has_overlapping_bodies() {
             self.opening = false   
         }

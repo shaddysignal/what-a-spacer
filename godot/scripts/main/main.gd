@@ -1,13 +1,17 @@
 extends Node2D
 
-@onready var character_spawner = $Characters/PlayerSpawner
+@onready var character_spawner = $PlayerSpawner
 
 @onready var log_ref = Log.create("Trace", get_path())
 
 func _ready() -> void:
+	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
+
+	character_spawner.spawned.connect(func(node: Node): log_ref.trace("SPAWNED: event fired for %s" % node.get_path()))
+	character_spawner.despawned.connect(func(node: Node): log_ref.trace("DESPAWNED: event fired for %s" % node.get_path()))
+
 	if multiplayer.is_server():
 		_init_player.rpc_id(1)
-		multiplayer.peer_disconnected.connect(_on_peer_disconnect)
 	else:
 		multiplayer.server_disconnected.connect(_on_server_disconnect) # Never called?
 		multiplayer.peer_disconnected.connect(func(id: int): if id == 1: _on_server_disconnect())
@@ -22,7 +26,11 @@ func _on_peer_disconnect(id: int):
 	var players = get_tree().get_nodes_in_group("players")
 	var to_delete = players.filter(func(p: Node): return p.get_multiplayer_authority() == id)
 	for p in to_delete:
-		p.queue_free()
+		_deinit_player.rpc_id(1, p.get_path())
+
+@rpc("any_peer", "call_local", "reliable")
+func _deinit_player(player_path: NodePath):
+	get_node(player_path).queue_free()
 
 @rpc("any_peer", "call_local", "reliable")
 func _init_player():
@@ -45,7 +53,7 @@ func _find_pod(pods: Array) -> Vector2:
 	var spawn_point = pod.get_node("Marker").global_position
 	if (spawn_area.has_overlapping_bodies()):
 		log_ref.trace("Found pod %s and it has bodies in it. Awaiting..." % pod_index)
-		await get_tree().create_timer(1).timeout
+		await Global.await_sec(0.2)
 		return await _find_pod(pods)
 	else:
 		log_ref.trace("Found pod %s and its empty" % pod_index)

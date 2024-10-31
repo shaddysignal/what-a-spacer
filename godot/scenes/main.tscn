@@ -116,8 +116,9 @@ navigation_polygon = SubResource("NavigationPolygon_qiu5e")
 
 [node name="Characters" type="Node2D" parent="."]
 
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="Characters"]
-spawn_path = NodePath("..")
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/character_body.tscn")
+spawn_path = NodePath("../Characters")
 script = ExtResource("5_dp24y")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

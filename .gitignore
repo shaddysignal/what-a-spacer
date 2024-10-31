@@ -1,3 +1,6 @@
+# vscode
+godot/.vscode/
+
 # Rust project ignores
 rust/target
 rust/.idea
