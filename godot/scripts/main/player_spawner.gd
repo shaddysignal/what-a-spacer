@@ -9,12 +9,18 @@ func _ready() -> void:
 
 func _spawn_player(data: Array) -> Player:
 	var owner_id = data[0]
-	var position: Vector2 = data[1]
+	var position = data[1]
 
 	log_ref.trace("Init player with %s id" % owner_id)
 
-	var unpacked: Player = character_scene.instantiate()
+	var unpacked = character_scene.instantiate()
 	unpacked.set_multiplayer_authority(owner_id)
 	unpacked.global_position = position
 
 	return unpacked
+
+func _enter_tree() -> void:
+	Log.global_info("Trace", "ENTER_TREE: spawner enter tree")
+
+func _exit_tree() -> void:
+	Log.global_info("Trace", "EXIT_TREE: spawner exit tree")

@@ -6,7 +6,21 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c4e84"]
 bg_color = Color(0.109375, 0.109375, 0.109375, 1)
 
-[node name="Control" type="Panel" groups=["roots"]]
+[node name="LoadingRoot" type="Control" groups=["roots"]]
+z_index = 99
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_4bfbv")
+
+[node name="LoadingPanel" type="Panel" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -16,9 +30,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_o53h2")
 theme_override_styles/panel = SubResource("StyleBoxFlat_c4e84")
-script = ExtResource("1_4bfbv")
 
-[node name="Control" type="CenterContainer" parent="."]
+[node name="Control" type="CenterContainer" parent="LoadingPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,16 +40,16 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="WaitingContainer" type="VBoxContainer" parent="Control"]
+[node name="WaitingContainer" type="VBoxContainer" parent="LoadingPanel/Control"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="LoadingBar" type="ProgressBar" parent="Control/WaitingContainer"]
+[node name="LoadingBar" type="ProgressBar" parent="LoadingPanel/Control/WaitingContainer"]
 custom_minimum_size = Vector2(600, 15)
 layout_mode = 2
 show_percentage = false
 
-[node name="MessageLabel" type="Label" parent="Control/WaitingContainer"]
+[node name="MessageLabel" type="Label" parent="LoadingPanel/Control/WaitingContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4

@@ -1,8 +1,9 @@
 mod door;
 mod player;
-mod loading_scene;
+// mod loading_scene;
 mod logging;
 mod util;
+mod cache;
 
 use godot::prelude::*;
 

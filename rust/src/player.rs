@@ -1,6 +1,9 @@
-use godot::classes::{CharacterBody2D, ICharacterBody2D, InputEvent, MultiplayerSynchronizer, NavigationAgent2D};
+use crate::logging::Level;
+use crate::logging::Log;
+use godot::classes::{CharacterBody2D, ICharacterBody2D, InputEvent, NavigationAgent2D};
 use godot::obj::{OnReady, WithBaseField};
-use godot::prelude::{godot_api, Base, Camera2D, Gd, GodotClass, NodePath, ToGodot, Var, Vector2};
+use godot::prelude::{godot_api, Base, Camera2D, Gd, GodotClass, Vector2};
+use std::convert::Into;
 
 #[derive(GodotClass)]
 #[class(init, base=CharacterBody2D)]
@@ -12,6 +15,8 @@ pub struct Player {
     navigation_agent: OnReady<Gd<NavigationAgent2D>>,
     #[init(node = "Camera2D")]
     camera: OnReady<Gd<Camera2D>>,
+    #[init(val = OnReady::manual())]
+    log_ref: OnReady<Gd<Log>>,
 
     base: Base<CharacterBody2D>
 }
@@ -31,16 +36,22 @@ impl ICharacterBody2D for Player {
 
         self.base_mut().move_and_slide();
     }
-
-    fn ready(&mut self) {
-        self.navigation_agent.set_path_desired_distance(4.0f32);
-        self.navigation_agent.set_target_desired_distance(4.0f32);
-        
-        if self.base().is_multiplayer_authority() {
-            self.camera.make_current();
-        }
+    
+    fn enter_tree(&mut self) {
+        Log::global_info(Level::Trace, "ENTER_TREE: character entered tree".to_string());
     }
 
+    fn exit_tree(&mut self) {
+        Log::global_info(Level::Trace, "EXIT_TREE: character exit tree".to_string());
+    }
+
+    fn ready(&mut self) {
+        self.log_ref.init(Log::create(Level::Trace, self.base().get_path()));
+
+        self.navigation_agent.set_path_desired_distance(4.0f32);
+        self.navigation_agent.set_target_desired_distance(4.0f32);
+    }
+    
     fn unhandled_input(&mut self, event: Gd<InputEvent>) {
         if event.is_action_pressed("ui_mouse".into()) && self.base().is_multiplayer_authority() {
             let click_position = self.base().get_global_mouse_position();
@@ -59,4 +70,10 @@ impl Player {
         self.navigation_agent.set_target_position(movement_target);
     }
 
+    #[func]
+    pub fn camera_setup(&mut self) {
+        self.camera.set_enabled(true);
+        self.camera.make_current();
+    }
+    
 }

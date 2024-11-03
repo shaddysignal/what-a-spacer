@@ -106,10 +106,8 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 	if response == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
 		lobby_id = this_lobby_id
 		populate_lobby_members()
-		
-		get_tree().root.multiplayer.multiplayer_peer = peer
 
-		lobby_ready.emit() # signal when to move from waiting to main
+		lobby_ready.emit() # signal when to move from waiting to main ???
 	else:
 		var fail_reason: String
 
@@ -168,6 +166,9 @@ func join_lobby_request(this_lobby_id: int) -> void:
 
 	_init_peer()
 	peer.connect_lobby(this_lobby_id)
+
+func tree_multiplayer_peer_setup():
+	get_tree().root.multiplayer.multiplayer_peer = peer
 
 func leave_lobby() -> void:
 	if lobby_id != 0:

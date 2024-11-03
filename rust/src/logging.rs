@@ -13,6 +13,8 @@ ordered_string_enum! {
     }
 }
 
+static mut GLOBAL_LEVEL: Level = Level::Trace;
+
 #[derive(GodotClass)]
 #[class(init)]
 pub struct Log {
@@ -22,7 +24,7 @@ pub struct Log {
 
 #[godot_api]
 impl IRefCounted for Log {
-
+    
 }
 
 #[godot_api]
@@ -37,37 +39,51 @@ impl Log {
     }
 
     #[func]
+    pub fn global_info(level: Level, message: String) {
+        unsafe {
+            Log::write(&GLOBAL_LEVEL, &level, message, "PLACE WITHOUTH PATH".to_string())
+        }
+    }
+    
+    #[func]
+    pub fn global_level_update(new_level: Level) {
+        unsafe {
+            GLOBAL_LEVEL = new_level
+        }
+    }
+    
+    #[func]
     pub fn info(&self, message: String) {
-        self.write(Level::Info, message);
+        Log::write(&self.max_level, &Level::Info, message, self.path.to_string());
     }
 
     #[func]
     pub fn warn(&self, message: String) {
-        self.write(Level::Warn, message);
+        Log::write(&self.max_level, &Level::Warn, message, self.path.to_string());
     }
 
     #[func]
     pub fn error(&self, message: String) {
-        self.write(Level::Error, message);
+        Log::write(&self.max_level, &Level::Error, message, self.path.to_string());
     }
 
     #[func]
     pub fn trace(&self, message: String) {
-        self.write(Level::Trace, message);
+        Log::write(&self.max_level, &Level::Trace, message, self.path.to_string());
     }
 
     #[func]
     pub fn debug(&self, message: String) {
-        self.write(Level::Debug, message);
+        Log::write(&self.max_level, &Level::Debug, message, self.path.to_string());
     }
 
-    fn write(&self, level: Level, message: String) {
-        if self.max_level >= level {
+    fn write(max_level: &Level, level: &Level, message: String, path: String) {
+        if max_level >= level {
             godot_print!(
                 "{} {:<5} [{}] {}",
                 Utc::now().format("%Y-%m-%d %H:%M:%S,%3f"),
                 level,
-                self.path,
+                path,
                 message
             );
         }

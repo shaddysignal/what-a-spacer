@@ -121,6 +121,7 @@ _spawnable_scenes = PackedStringArray("res://scenes/character_body.tscn")
 spawn_path = NodePath("../Characters")
 script = ExtResource("5_dp24y")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
+visible = false
 
-[node name="LobbyControl" parent="CanvasLayer" instance=ExtResource("5_0ikhn")]
+[node name="LobbyControl" parent="UI" instance=ExtResource("5_0ikhn")]

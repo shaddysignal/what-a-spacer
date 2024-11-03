@@ -1,7 +1,9 @@
 extends Node
 
+const log_level = "Trace"
+
 func _ready() -> void:
-    pass
+    Log.global_level_update(log_level)
 
 func queue_free_children(node: Node) -> void:
     for child in node.get_children():

@@ -1,22 +1,38 @@
 extends Node2D
 
-@onready var character_spawner = $PlayerSpawner
+@onready var ui_layer = $UI
+@onready var player_spawner = $PlayerSpawner
 
 @onready var log_ref = Log.create("Trace", get_path())
 
 func _ready() -> void:
-	multiplayer.peer_disconnected.connect(_on_peer_disconnect)
-
-	character_spawner.spawned.connect(func(node: Node): log_ref.trace("SPAWNED: event fired for %s" % node.get_path()))
-	character_spawner.despawned.connect(func(node: Node): log_ref.trace("DESPAWNED: event fired for %s" % node.get_path()))
+	player_spawner.spawned.connect(_on_player_spawned)
+	player_spawner.despawned.connect(func(node: Node): log_ref.trace("DESPAWNED: event fired for %s" % node.get_path()))
+	
+	SteamNetwork.tree_multiplayer_peer_setup()
 
 	if multiplayer.is_server():
-		_init_player.rpc_id(1)
+		multiplayer.peer_disconnected.connect(_on_peer_disconnect)
 	else:
 		multiplayer.server_disconnected.connect(_on_server_disconnect) # Never called?
 		multiplayer.peer_disconnected.connect(func(id: int): if id == 1: _on_server_disconnect())
 
-		_init_player.rpc_id(1)
+	get_tree().current_scene.loading_done.connect(_on_scene_ready)
+
+func _on_player_spawned(p: Player):
+	if p.is_multiplayer_authority():
+		log_ref.trace("setup camera for player %s (%s)" % [p.get_path(), p.get_multiplayer_authority()])
+		p.camera_setup()
+
+func _on_scene_ready():
+	ui_layer.visible = true
+
+	# TODO maybe alright, seem too much though
+	if multiplayer.is_server():
+		var ch = await _init_player(1)
+		ch.camera_setup()
+	else:
+		_init_player.rpc_id(1, multiplayer.get_unique_id())
 
 func _on_server_disconnect():
 	SteamNetwork.leave_lobby()
@@ -26,24 +42,20 @@ func _on_peer_disconnect(id: int):
 	var players = get_tree().get_nodes_in_group("players")
 	var to_delete = players.filter(func(p: Node): return p.get_multiplayer_authority() == id)
 	for p in to_delete:
-		_deinit_player.rpc_id(1, p.get_path())
+		p.queue_free()
 
 @rpc("any_peer", "call_local", "reliable")
-func _deinit_player(player_path: NodePath):
-	get_node(player_path).queue_free()
-
-@rpc("any_peer", "call_local", "reliable")
-func _init_player():
+func _init_player(id: int) -> Player:
 	var pods = get_tree().get_nodes_in_group("life_support")
 	pods.sort()
 	
-	var owner_id = multiplayer.get_remote_sender_id()
-	log_ref.trace("Before await: %s" % owner_id)
+	var owner_id = id
 	var spawn_point = await _find_pod(pods)
-	log_ref.trace("After await: %s" % owner_id)
 
-	var ch = character_spawner.spawn([owner_id, spawn_point])
+	var ch = player_spawner.spawn([owner_id, spawn_point])
 	log_ref.trace("Player spawn with authority %s" % ch.get_multiplayer_authority())
+
+	return ch
 
 func _find_pod(pods: Array) -> Vector2:
 	var pod_index = randi_range(0, pods.size() - 1)

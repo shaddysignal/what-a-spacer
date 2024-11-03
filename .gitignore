@@ -6,8 +6,8 @@ rust/target
 rust/.idea
 
 # Godot 4+ specific ignores
-godot/.godot/
 !godot/.godot/extension_list.cfg
+godot/.godot
 
 #bins
 godot/bin
