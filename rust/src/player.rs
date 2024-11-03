@@ -38,11 +38,11 @@ impl ICharacterBody2D for Player {
     }
     
     fn enter_tree(&mut self) {
-        Log::global_info(Level::Trace, "ENTER_TREE: character entered tree".to_string());
+        Log::global_info(Level::Trace, "ENTER_TREE: player enter tree".to_string());
     }
 
     fn exit_tree(&mut self) {
-        Log::global_info(Level::Trace, "EXIT_TREE: character exit tree".to_string());
+        Log::global_info(Level::Trace, "EXIT_TREE: player exit tree".to_string());
     }
 
     fn ready(&mut self) {

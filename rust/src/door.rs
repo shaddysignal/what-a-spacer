@@ -1,6 +1,8 @@
 use godot::classes::{Area2D, PathFollow2D};
 use godot::global::{maxf, minf};
+use godot::obj::WithBaseField;
 use godot::prelude::{godot_api, Base, Gd, GodotClass, INode2D, Node2D, OnReady};
+use crate::logging::{Level, Log};
 
 #[derive(GodotClass)]
 #[class(init, base=Node2D)]
@@ -12,6 +14,8 @@ pub struct Door {
     door_position: OnReady<Gd<PathFollow2D>>,
     #[init(node = "DetectionArea")]
     trigger_area: OnReady<Gd<Area2D>>,
+    #[init(val = OnReady::manual())]
+    log_ref: OnReady<Gd<Log>>,
     opening: bool,
 
     base: Base<Node2D>
@@ -30,19 +34,28 @@ impl INode2D for Door {
                 .set_progress_ratio(maxf(progress - self.speed * delta, 0.0f64) as f32)
         }
     }
+
+    fn ready(&mut self) {
+        self.log_ref.init(Log::create(Level::Trace, self.base().get_path()));
+    }
 }
 
 #[godot_api]
 impl Door {
     #[func]
-    fn area_entered(&mut self, _obj: Gd<Node2D>) {
+    fn area_entered(&mut self, obj: Gd<Node2D>) {
+        self.log_ref.bind().trace(format!("Door detected {} entering", obj.get_path()));
         self.opening = true
     }
     
     #[func]
-    fn area_exited(&mut self, _obj: Gd<Node2D>) {
-        // TODO: not called after peer disconnect
-        if !self.trigger_area.has_overlapping_bodies() {
+    fn area_exited(&mut self, obj: Gd<Node2D>) {
+        self.log_ref.bind().trace(format!("Door detected {} leaving", obj.get_path()));
+        
+        let mut bodies = self.trigger_area.get_overlapping_bodies();
+        bodies.erase(&obj);
+        
+        if bodies.is_empty() {
             self.opening = false   
         }
     }
