@@ -1,6 +1,3 @@
-use godot::prelude::GodotConvert;
-use godot::builtin::GString;
-
 #[macro_export]
 macro_rules! ordered_string_enum {
     (enum $name:ident default $default:ident {
@@ -32,6 +29,9 @@ macro_rules! ordered_string_enum {
 
 #[test]
 fn test_ordered_string_enum() {
+    use godot::prelude::GodotConvert;
+    use godot::builtin::GString;
+    
     ordered_string_enum! {
         enum A default Ta {
             Ba = "BA",

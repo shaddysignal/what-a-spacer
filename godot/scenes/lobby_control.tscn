@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://b3771xtxi78ir"]
 
-[ext_resource type="FontFile" uid="uid://biht5lg82shnb" path="res://ethnocentric/ethnocentric rg.otf" id="1_fnl2m"]
+[ext_resource type="FontFile" uid="uid://biht5lg82shnb" path="res://assets/fonts/ethnocentric/ethnocentric rg.otf" id="1_fnl2m"]
 [ext_resource type="Script" path="res://scripts/lobby_control/lobby_chat.gd" id="2_6lu20"]
 [ext_resource type="PackedScene" uid="uid://cyqy2r2u2chaj" path="res://scenes/chat_item.tscn" id="3_n82y6"]
 [ext_resource type="Script" path="res://scripts/lobby_control/quit_button.gd" id="4_m0l0d"]

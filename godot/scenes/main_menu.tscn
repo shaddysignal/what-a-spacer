@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://c8xtsoag868sb"]
 
-[ext_resource type="Theme" uid="uid://blo0cm7b3q81j" path="res://main_theme.tres" id="1_7w4p8"]
+[ext_resource type="Theme" uid="uid://blo0cm7b3q81j" path="res://assets/tres/main_theme.tres" id="1_7w4p8"]
 [ext_resource type="PackedScene" uid="uid://du8g3fai2nbf1" path="res://scenes/lobby_item.tscn" id="2_1y85i"]
 [ext_resource type="Script" path="res://scripts/main_menu/create_button.gd" id="2_o1cp0"]
-[ext_resource type="Texture2D" uid="uid://7ajtvhwpb7mg" path="res://loading-icon-transparent-background-22.png" id="3_btudf"]
+[ext_resource type="Texture2D" uid="uid://7ajtvhwpb7mg" path="res://assets/loading-icon-transparent-background-22.png" id="3_btudf"]
 [ext_resource type="Script" path="res://scripts/main_menu/exit_button.gd" id="3_dic71"]
 [ext_resource type="Script" path="res://scripts/main_menu/waiting_node.gd" id="4_62jh7"]
 [ext_resource type="Script" path="res://scripts/main_menu/lobby_selection.gd" id="4_d3rh6"]

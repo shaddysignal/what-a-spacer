@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://de35tlu2xosp7"]
 
-[ext_resource type="Texture2D" uid="uid://bmaq5vwpru384" path="res://icon.svg" id="2_2acl3"]
+[ext_resource type="Texture2D" uid="uid://bmaq5vwpru384" path="res://assets/icon.svg" id="2_2acl3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4idro"]
 height = 20.0

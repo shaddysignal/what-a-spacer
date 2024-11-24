@@ -11,31 +11,31 @@ var steam_username: String = ""
 @onready var log_ref = Log.create("Trace", get_path())
 
 func _init() -> void:
-	pass
-	
+    pass
+    
 func _ready() -> void:
-	initialize_steam()
+    initialize_steam()
 
 
 func _process(_delta: float) -> void:
-	Steam.run_callbacks()
+    Steam.run_callbacks()
 
 
 func initialize_steam() -> void:
-	var initialize_response: Dictionary = Steam.steamInitEx(true, steam_app_id)
-	log_ref.info("Did Steam initialize?: %s" % initialize_response)
+    var initialize_response: Dictionary = Steam.steamInitEx(true, steam_app_id)
+    log_ref.info("Did Steam initialize?: %s" % initialize_response)
 
-	if initialize_response['status'] > 0:
-		log_ref.error("Failed to initialize Steam. Shutting down. %s" % initialize_response)
-		get_tree().quit()
+    if initialize_response['status'] > 0:
+        log_ref.error("Failed to initialize Steam. Shutting down. %s" % initialize_response)
+        get_tree().quit()
 
-	# Gather additional data
-	is_on_steam_deck = Steam.isSteamRunningOnSteamDeck()
-	is_online = Steam.loggedOn()
-	is_owned = Steam.isSubscribed()
-	steam_id = Steam.getSteamID()
-	steam_username = Steam.getPersonaName()
+    # Gather additional data
+    is_on_steam_deck = Steam.isSteamRunningOnSteamDeck()
+    is_online = Steam.loggedOn()
+    is_owned = Steam.isSubscribed()
+    steam_id = Steam.getSteamID()
+    steam_username = Steam.getPersonaName()
 
-	# Check if account owns the game
-	if is_owned == false:
-		log_ref.warn("User does not own this game")
+    # Check if account owns the game
+    if is_owned == false:
+        log_ref.warn("User does not own this game")

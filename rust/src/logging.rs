@@ -1,3 +1,4 @@
+use std::ptr::addr_of;
 use crate::ordered_string_enum;
 use chrono::prelude::Utc;
 use godot::global::godot_print;
@@ -40,9 +41,7 @@ impl Log {
 
     #[func]
     pub fn global_info(level: Level, message: String) {
-        unsafe {
-            Log::write(&GLOBAL_LEVEL, &level, message, "PLACE WITHOUTH PATH".to_string())
-        }
+        Log::write(addr_of!(GLOBAL_LEVEL), &level, message, "PLACE WITHOUTH PATH".to_string())
     }
     
     #[func]
@@ -77,7 +76,7 @@ impl Log {
         Log::write(&self.max_level, &Level::Debug, message, self.path.to_string());
     }
 
-    fn write(max_level: &Level, level: &Level, message: String, path: String) {
+    fn write(max_level: *const Level, level: &Level, message: String, path: String) {
         if max_level >= level {
             godot_print!(
                 "{} {:<5} [{}] {}",

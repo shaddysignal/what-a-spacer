@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://blo0cm7b3q81j"]
+
+[ext_resource type="FontFile" uid="uid://biht5lg82shnb" path="res://assets/fonts/ethnocentric/ethnocentric rg.otf" id="1_dnjc7"]
+
+[resource]
+default_font = ExtResource("1_dnjc7")
+default_font_size = 14
+Button/colors/font_color = Color(0.351562, 0.351562, 0.351562, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0)
+Label/font_sizes/font_size = 14
